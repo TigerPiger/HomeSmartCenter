@@ -11,6 +11,12 @@
 #include <rtdevice.h>
 
 #include "drv_gpio.h"
+#include "sensor_dallas_dht11.h"
+
+#if defined(BSP_USING_DHT11) && defined( PKG_USING_DHT11 )
+extern int rt_hw_dht11_port(void);
+extern int dht11_read_temp_sample(void);
+#endif
 
 #define LED_PIN     GET_PIN(0, 1)
 #define BUTTON_PIN  GET_PIN(6, 2) // MCU_USER_BTN
@@ -46,6 +52,11 @@ void led_thread_entry(void* parameter) {
 
 int main(void)
 {
+#if defined(BSP_USING_DHT11) && defined( PKG_USING_DHT11 )
+    rt_hw_dht11_port();
+    dht11_read_temp_sample();
+#endif
+
     rt_pin_mode(LED_PIN, PIN_MODE_OUTPUT);
     rt_pin_write(LED_PIN, PIN_HIGH);
 
