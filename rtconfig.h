@@ -80,16 +80,29 @@
 
 /* DFS: device virtual file system */
 
+#define RT_USING_DFS
+#define DFS_USING_POSIX
+#define DFS_USING_WORKDIR
+#define DFS_FD_MAX 16
+#define RT_USING_DFS_V1
+#define DFS_FILESYSTEMS_MAX 4
+#define DFS_FILESYSTEM_TYPES_MAX 4
+#define RT_USING_DFS_DEVFS
 /* end of DFS: device virtual file system */
 
 /* Device Drivers */
 
 #define RT_USING_DEVICE_IPC
 #define RT_UNAMED_PIPE_NUMBER 64
+#define RT_USING_SYSTEM_WORKQUEUE
+#define RT_SYSTEM_WORKQUEUE_STACKSIZE 2048
+#define RT_SYSTEM_WORKQUEUE_PRIORITY 23
 #define RT_USING_SERIAL
 #define RT_USING_SERIAL_V1
 #define RT_SERIAL_USING_DMA
-#define RT_SERIAL_RB_BUFSZ 64
+#define RT_SERIAL_RB_BUFSZ 1024
+#define RT_USING_I2C
+#define RT_USING_I2C_BITOPS
 #define RT_USING_PIN
 #define RT_USING_SENSOR
 #define RT_USING_SENSOR_CMD
@@ -105,18 +118,48 @@
 
 /* POSIX (Portable Operating System Interface) layer */
 
+#define RT_USING_POSIX_FS
+#define RT_USING_POSIX_DEVIO
+#define RT_USING_POSIX_POLL
+#define RT_USING_POSIX_SELECT
+#define RT_USING_POSIX_SOCKET
 
 /* Interprocess Communication (IPC) */
 
+#define RT_USING_POSIX_PIPE
+#define RT_USING_POSIX_PIPE_SIZE 512
 
 /* Socket is in the 'Network' category */
 
 /* end of Interprocess Communication (IPC) */
 /* end of POSIX (Portable Operating System Interface) layer */
+#define RT_USING_CPLUSPLUS
 /* end of C/C++ and POSIX layer */
 
 /* Network */
 
+#define RT_USING_SAL
+#define SAL_INTERNET_CHECK
+
+/* Docking with protocol stacks */
+
+#define SAL_USING_AT
+/* end of Docking with protocol stacks */
+#define SAL_USING_POSIX
+#define RT_USING_NETDEV
+#define NETDEV_USING_IFCONFIG
+#define NETDEV_USING_PING
+#define NETDEV_USING_NETSTAT
+#define NETDEV_USING_AUTO_DEFAULT
+#define NETDEV_IPV4 1
+#define NETDEV_IPV6 0
+#define RT_USING_AT
+#define AT_USING_CLIENT
+#define AT_CLIENT_NUM_MAX 1
+#define AT_USING_SOCKET
+#define AT_USING_CLI
+#define AT_CMD_MAX_LEN 128
+#define AT_SW_VERSION_NUM 0x10301
 /* end of Network */
 
 /* Utilities */
@@ -128,6 +171,13 @@
 
 /* IoT - internet of things */
 
+#define PKG_USING_PAHOMQTT
+#define PAHOMQTT_PIPE_MODE
+#define PKG_USING_PAHOMQTT_EXAMPLE
+#define RT_PKG_MQTT_THREAD_STACK_SIZE 4096
+#define PKG_PAHOMQTT_SUBSCRIBE_HANDLERS 1
+#define MQTT_DEBUG
+#define PKG_USING_PAHOMQTT_LATEST
 
 /* Wi-Fi */
 
@@ -139,9 +189,28 @@
 
 /* end of Wiced WiFi */
 /* end of Wi-Fi */
+#define PKG_USING_AT_DEVICE
+#define AT_DEVICE_USING_ESP8266
+#define AT_DEVICE_ESP8266_SOCKET
+#define AT_DEVICE_ESP8266_SAMPLE
+#define ESP8266_SAMPLE_WIFI_SSID "GRAPEHOME"
+#define ESP8266_SAMPLE_WIFI_PASSWORD "hcs_20190113"
+#define ESP8266_SAMPLE_CLIENT_NAME "uart5"
+#define ESP8266_SAMPLE_RECV_BUFF_LEN 512
+#define PKG_USING_AT_DEVICE_LATEST_VERSION
+#define PKG_AT_DEVICE_VER_NUM 0x99999
 
 /* IoT Cloud */
 
+#define PKG_USING_ONENET
+#define PKG_USING_ONENET_SAMPLE
+#define ONENET_USING_MQTT
+#define ONENET_INFO_DEVID "device1"
+#define ONENET_INFO_AUTH "12345678"
+#define ONENET_INFO_APIKEY "iOShqfgzNvaEHTS37GFEFQ%3D%3D"
+#define ONENET_INFO_PROID "Th8OB46ndG"
+#define ONENET_MASTER_APIKEY "6w88cQZMdQ2lv3UCtlgddw%3D%3D"
+#define PKG_USING_ONENET_LATEST_VERSION
 /* end of IoT Cloud */
 /* end of IoT - internet of things */
 
@@ -153,6 +222,8 @@
 
 /* JSON: JavaScript Object Notation, a lightweight data-interchange format */
 
+#define PKG_USING_CJSON
+#define PKG_USING_CJSON_LATEST_VERSION
 /* end of JSON: JavaScript Object Notation, a lightweight data-interchange format */
 
 /* XML: Extensible Markup Language */
@@ -210,6 +281,13 @@
 /* Kendryte SDK */
 
 /* end of Kendryte SDK */
+#define PKG_USING_I2C_TOOLS
+#define PKG_USING_I2C_TOOLS_LATEST_VERSION
+#define PKG_USING_SSD1306
+#define PKG_USING_SSD1306_I2C_ADDRESS 0x3C
+#define PKG_USING_SSD1306_I2C_BUS_NAME "i2c3"
+#define PKG_USING_SSD1306_SAMPLE
+#define PKG_USING_SSD1306_LATEST_VERSION
 /* end of peripheral libraries and drivers */
 
 /* AI packages */
@@ -288,11 +366,20 @@
 
 #define BSP_USING_GPIO
 #define BSP_USING_UART
+#define BSP_USING_UART5
 #define BSP_USING_UART6
+#define BSP_USING_HW_I2C
+#define BSP_USING_HW_I2C3
+
+/* Notice: P6_0 --> 48; P6_1 --> 49 */
+
+#define BSP_I2C3_SCL_PIN 64
+#define BSP_I2C3_SDA_PIN 65
 /* end of On-chip Peripheral Drivers */
 
 /* Board extended module Drivers */
 
+#define BSP_USING_DHT11
 /* end of Board extended module Drivers */
 /* end of Hardware Drivers Config */
 

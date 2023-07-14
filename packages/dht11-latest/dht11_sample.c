@@ -18,6 +18,28 @@
 /* Modify this pin according to the actual wiring situation */
 #define DHT11_DATA_PIN    GET_PIN(5, 0)
 
+//#include "cy_gpio.h"
+///******************************************************************************
+// * Definitions and functions for PDL example
+// *****************************************************************************/
+///* This structure is used to initialize a single GPIO pin using PDL configuration.*/
+//const cy_stc_gpio_pin_config_t P5_0_Pin_Init =
+//    {
+//        .outVal = 1u,                    /* Pin output state */
+//        .driveMode = CY_GPIO_DM_PULLUP,  /* Drive mode */
+//        .hsiom = HSIOM_SEL_GPIO,         /* HSIOM selection */
+//        .intEdge = CY_GPIO_INTR_FALLING, /* Interrupt Edge type */
+//        .intMask = CY_GPIO_INTR_EN_MASK, /* Interrupt enable mask */
+//        .vtrip = CY_GPIO_VTRIP_CMOS,     /* Input buffer voltage trip type */
+//        .slewRate = CY_GPIO_SLEW_FAST,   /* Output buffer slew rate */
+//        .driveSel = CY_GPIO_DRIVE_FULL,  /* Drive strength */
+//        .vregEn = 0u,                    /* SIO pair output buffer mode */
+//        .ibufMode = 0u,                  /* SIO pair input buffer mode */
+//        .vtripSel = 0u,                  /* SIO pair input buffer trip point */
+//        .vrefSel = 0u,                   /* SIO pair reference voltage for input buffer trip point */
+//        .vohSel = 0u                     /* SIO pair regulated voltage output level */
+//};
+
 static void read_temp_entry(void *parameter)
 {
     rt_device_t dev = RT_NULL;
@@ -86,6 +108,7 @@ int rt_hw_dht11_port(void)
 {
     struct rt_sensor_config cfg;
     
+
     cfg.intf.arg = (void *)DHT11_DATA_PIN;
     rt_hw_dht11_init("dht11", &cfg);
 

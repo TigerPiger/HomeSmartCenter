@@ -60,13 +60,13 @@ static void dht11_reset(rt_base_t pin)
     rt_thread_mdelay(20);               /* 20ms */
 
     rt_pin_write(pin, PIN_HIGH);
-    rt_hw_us_delay(20);                 /* 30us*/
+    rt_hw_us_delay(30);                 /* 30us*/
 }
 
 static uint8_t dht11_check(rt_base_t pin)
 {
     uint8_t retry = 0;
-    rt_pin_mode(pin, PIN_MODE_INPUT);
+    rt_pin_mode(pin, PIN_MODE_INPUT_PULLUP);
 
     while (rt_pin_read(pin) && retry < 100)
     {

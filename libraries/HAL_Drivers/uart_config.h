@@ -174,8 +174,8 @@ extern "C"
 #define UART5_CONFIG                            \
     {                                           \
         .name = "uart5",                        \
-        .tx_pin = P5_1,                         \
-        .rx_pin = P5_0,                         \
+        .tx_pin = P11_1,                         \
+        .rx_pin = P11_0,                         \
         .usart_x = SCB5,                        \
         .intrSrc = scb_5_interrupt_IRQn,        \
         .userIsr = uart_isr_callback(uart5),    \
