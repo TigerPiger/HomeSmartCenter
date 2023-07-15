@@ -19,6 +19,7 @@
 
 #include "DHT11.h"
 #include "ssd1306.h"
+#include "showChinese.h"
 
 //#if defined(BSP_USING_DHT11) && defined( PKG_USING_DHT11 )
 //extern int rt_hw_dht11_port(void);
@@ -60,7 +61,9 @@ void led_thread_entry(void* parameter) {
 static rt_thread_t test_thread;
 void test_thread_entry(void* parameter) {
     uint8* data;
+
     char buffer[100];
+    static uint8_t offset = 0;
 
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
     LOG_E("Results\n\r");
@@ -76,16 +79,35 @@ void test_thread_entry(void* parameter) {
             LOG_E(" Error reading sensor!\n\r");
         }
 
+        offset = 5;
         ssd1306_Fill(Black);
-        ssd1306_SetCursor(10, 10);
+        ssd1306_SetCursor(offset, 10);
+        ssd1306_WriteString("RT-Thread x Infineon", Font_6x8, White);
+
+        OLED_DrawHz(offset, 20, 0, White);
+        offset+=16;
+        OLED_DrawHz(offset, 20, 1, White);
+        offset+=16;
+        OLED_DrawHz(offset, 20, 2, White);
+        offset+=16;
+        OLED_DrawHz(offset, 20, 3, White);
+        offset+=16;
+        OLED_DrawHz(offset, 20, 4, White);
+        offset+=16;
+        OLED_DrawHz(offset, 20, 5, White);
+
+
+        ssd1306_SetCursor(5, 40);
         rt_sprintf(buffer, "Humidity: %d", data[0]);
         ssd1306_WriteString(buffer, Font_7x10, White);
     
-        ssd1306_SetCursor(10, 20);
+        ssd1306_SetCursor(5, 50);
         rt_sprintf(buffer, "Temperature: %d", data[2]);
         ssd1306_WriteString(buffer, Font_7x10, White);
 
         ssd1306_UpdateScreen();
+
+
 
         rt_thread_mdelay(1000);
     }
