@@ -278,6 +278,29 @@ void init_cycfg_pins(void)
     Cy_GPIO_Pin_Init(CYBSP_CINB_PORT, CYBSP_CINB_PIN, &CYBSP_CINB_config);
 }
 
+#if defined (CY_USING_HAL)
+    #define CYBSP_CSD_PMW2_PORT GPIO_PRT5
+    #define CYBSP_CSD_PMW2_PORT_NUM 0U
+
+    const cyhal_resource_inst_t CYBSP_PMW_PMW2_obj =
+    {
+        .type = CYHAL_RSC_GPIO,
+        .block_num = CYBSP_CSD_PMW2_PORT,
+        .channel_num = CYBSP_CSD_PMW2_PORT_NUM,
+    };
+#endif //defined (CY_USING_HAL)
+
+#if defined (CY_USING_HAL)
+    #define CYBSP_CSD_PMW8_PORT GPIO_PRT5
+    #define CYBSP_CSD_PMW8_PORT_NUM 6U
+    const cyhal_resource_inst_t CYBSP_PMW_PMW8_obj =
+    {
+        .type = CYHAL_RSC_GPIO,
+        .block_num = CYBSP_CSD_PMW8_PORT,
+        .channel_num = CYBSP_CSD_PMW8_PORT_NUM,
+    };
+#endif //defined (CY_USING_HAL)
+
 void reserve_cycfg_pins(void)
 {
 #if defined (CY_USING_HAL)
@@ -291,5 +314,7 @@ void reserve_cycfg_pins(void)
     cyhal_hwmgr_reserve(&CYBSP_CSD_SLD2_obj);
     cyhal_hwmgr_reserve(&CYBSP_CSD_SLD3_obj);
     cyhal_hwmgr_reserve(&CYBSP_CSD_SLD4_obj);
+    cyhal_hwmgr_reserve(&CYBSP_PMW_PMW2_obj);
+    cyhal_hwmgr_reserve(&CYBSP_PMW_PMW8_obj);
 #endif //defined (CY_USING_HAL)
 }

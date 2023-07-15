@@ -274,9 +274,6 @@
 /* peripheral libraries and drivers */
 
 #define PKG_USING_SENSORS_DRIVERS
-#define PKG_USING_DHT11
-#define PKG_USING_DHT11_SAMPLE
-#define PKG_USING_DHT11_LATEST_VERSION
 
 /* Kendryte SDK */
 
@@ -286,7 +283,6 @@
 #define PKG_USING_SSD1306
 #define PKG_USING_SSD1306_I2C_ADDRESS 0x3C
 #define PKG_USING_SSD1306_I2C_BUS_NAME "i2c3"
-#define PKG_USING_SSD1306_SAMPLE
 #define PKG_USING_SSD1306_LATEST_VERSION
 /* end of peripheral libraries and drivers */
 

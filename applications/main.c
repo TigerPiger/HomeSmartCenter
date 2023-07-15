@@ -10,8 +10,15 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 
+#include <board.h>
+#include <string.h>
+#include <stdio.h>
+
 #include "drv_gpio.h"
-#include "sensor_dallas_dht11.h"
+//#include "sensor_dallas_dht11.h"
+
+#include "DHT11.h"
+#include "ssd1306.h"
 
 //#if defined(BSP_USING_DHT11) && defined( PKG_USING_DHT11 )
 //extern int rt_hw_dht11_port(void);
@@ -50,20 +57,59 @@ void led_thread_entry(void* parameter) {
     }
 }
 
+static rt_thread_t test_thread;
+void test_thread_entry(void* parameter) {
+    uint8* data;
+    char buffer[100];
+
+    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+    LOG_E("Results\n\r");
+
+    while(1) {
+        /* Place your application code here. */
+        rt_enter_critical();
+        data = DHT_Read();
+        rt_exit_critical();
+        if(data[0] != ERROR){
+            LOG_E(" Humidity: %d \n\r Temperature: %d \n\r", data[0], data[2]);
+        }else{
+            LOG_E(" Error reading sensor!\n\r");
+        }
+
+        ssd1306_Fill(Black);
+        ssd1306_SetCursor(10, 10);
+        rt_sprintf(buffer, "Humidity: %d", data[0]);
+        ssd1306_WriteString(buffer, Font_7x10, White);
+    
+        ssd1306_SetCursor(10, 20);
+        rt_sprintf(buffer, "Temperature: %d", data[2]);
+        ssd1306_WriteString(buffer, Font_7x10, White);
+
+        ssd1306_UpdateScreen();
+
+        rt_thread_mdelay(1000);
+    }
+}
+
+
 int main(void)
 {
 //#if defined(BSP_USING_DHT11) && defined( PKG_USING_DHT11 )
 //    dht11_read_temp_sample();
 //#endif
+    ssd1306_Init();
 
     rt_pin_mode(LED_PIN, PIN_MODE_OUTPUT);
     rt_pin_write(LED_PIN, PIN_HIGH);
 
     button_sem = rt_sem_create("button_press", 0, RT_IPC_FLAG_FIFO);
 
-    button_thread = rt_thread_create("button", button_thread_entry, RT_NULL, 512, 10, 5);
+    button_thread = rt_thread_create("button", button_thread_entry, RT_NULL, 512, 10, 10);
     rt_thread_startup(button_thread);
 
-    led_thread = rt_thread_create("led", led_thread_entry, RT_NULL, 512, 10, 5);
+    led_thread = rt_thread_create("led", led_thread_entry, RT_NULL, 512, 10, 10);
     rt_thread_startup(led_thread);
+
+    test_thread = rt_thread_create("test", test_thread_entry, RT_NULL, 1024, 10, 5);
+    rt_thread_startup(test_thread);
 }
